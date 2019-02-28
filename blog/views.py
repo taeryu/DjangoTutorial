@@ -8,7 +8,7 @@ from django.shortcuts import redirect
 def post_list(request):
     qs = Post.objects.all()
     qs = qs.filter(published_date__lte=timezone.now())
-    qs = qs.order_by('published_date')
+    qs = qs.order_by('-published_date')
 #models에서 만든 Post 클래스를 불러오고 해당 클래스가 만든 모든 객체중에 필터를 걸고 정렬한후
 #    
 #위의 qs는 이거를 쪼갠거  Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
