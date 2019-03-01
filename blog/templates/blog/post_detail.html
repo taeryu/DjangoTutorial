@@ -15,6 +15,10 @@
         {% endif %}
         <h1>{{ post.title }}</h1>
         <p>{{ post.text|linebreaksbr }}</p>
-       
     </div>
+
+  <p><a href="{% url 'post_list' %}">to homepage</a></p>
+
+
+
 {% endblock %}
