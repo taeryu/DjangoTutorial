@@ -11,7 +11,7 @@ from django.utils import timezone
 #클래스에는 속성과 행동을 둘다 넣을 수 있다? 객체 지향?
 
 #Django의 models 클래스를 불러왔는데 models에는 미리 정해놓은 필드타입(CharField따위)이 있다. 
-#작성자(author)는 ForeignKey(다른데서불러오는), 제목은 CharField로 글자제한을 200개로 해놓았고, 내용은 TextField로 정했고 작성일,발행일을 현재로 정해놨다
+#작성자(author)는 ForeignKey(ManyToOne), 제목은 CharField로 글자제한을 200개로 해놓았고, 내용은 TextField로 정했고 작성일,발행일을 현재로 정해놨다
  
 
 
