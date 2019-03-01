@@ -1,6 +1,7 @@
 {% extends "blog/base.html" %}
 
 {% block content %}
+<a href="{% url 'export_posts_csv' %}">글목록 다운로드</a>
     {% for post in post_list %}
         <div class="post">
             <div class="date">

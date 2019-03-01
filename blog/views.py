@@ -3,15 +3,17 @@ from django.utils import timezone
 from .models import Post
 from .forms import PostForm
 from django.shortcuts import redirect
-#view가 장고에서 사용자의 url요청을 받아서 해당하는 페이지를 보내는 함수 부분
+
+import csv
+from django.http import HttpResponse
+
 
 def post_list(request):
     qs = Post.objects.all()
     qs = qs.filter(published_date__lte=timezone.now())
     qs = qs.order_by('-published_date')
-#models에서 만든 Post 클래스를 불러오고 해당 클래스가 만든 모든 객체중에 필터를 걸고 정렬한후
-#    
-#위의 qs는 이거를 쪼갠거  Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+#models에서 만든 Post 클래스를 불러오고 해당 클래스가 만든 모든 객체중에 필터를 걸고 정렬
+#위의 qs(쿼리셋)는 이거를 쪼갠거  Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     return render(request, 'blog/post_list.html', {
         'post_list' : qs,
 
@@ -67,3 +69,18 @@ def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
     return redirect('post_list')
+
+#csv파일로 전체 글목록 출력하기
+
+def export_posts_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="posts.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['author', 'title', 'created_date', 'published_date'])
+
+    posts = Post.objects.all().values_list('author', 'title', 'created_date', 'published_date')
+    for post in posts:
+        writer.writerow(post)
+
+    return response
