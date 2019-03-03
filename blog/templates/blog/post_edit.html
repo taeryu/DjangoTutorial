@@ -1,9 +1,11 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-    <h1>New post</h1>
-    <form method="POST" class="post-form">{% csrf_token %}
+    <h1>새글</h1>
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        <!-- 입력칸이 있는 경우 방어용 -->
         {{ form.as_p }}
-        <button type="submit" class="save btn btn-primary">Save</button>
-    </form>
+        <!-- as_p는 애즈 패러그래프 as_ul, as_li같이 쓰는거 -->
+        <button type="submit" class="save btn btn-primary">저장</button>
 {% endblock %}

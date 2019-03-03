@@ -1,27 +1,39 @@
+/*CSS주석은 이렇게 넣는다 */
+
+/*page-header 클래스에 적용, 배경색깔은 오렌지;상단여백 값은 0;패딩은 네방향의 안쪽 여백 */
 .page-header {
-    background-color: #8cff00;
+    background-color: orange;
     margin-top: 0;
     padding: 20px 20px 20px 40px;
 }
 
+
+
+
+/*page-header 클래스의 자손 중 h1, h1의 a 즉 링크, a 즉 링크 중 방문한 경우 및 활성화 상태인 경우 (pseudo의사선택)  */
 .page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
     color: #ffffff;
     font-size: 36pt;
     text-decoration: none;
 }
 
+/*content 클래스의 왼쪽 여백 40픽셀 */
 .content {
     margin-left: 40px;
 }
+
+/*h1~h4의 폰트 */
 
 h1, h2, h3, h4 {
     font-family: 'Lobster', cursive;
 }
 
+/* date 클래스의 글씨 색깔 */
 .date {
-    color: #6610f2;
+    color: lightsalmon;
 }
 
+/* save 클래스의 float : 사진과 글 등이 같이 있을 경우 글을 어느쪽에 띄울거냐? 왼쪽 오른쪽 */
 .save {
     float: right;
 }

@@ -2,21 +2,28 @@
 
 {% block content %}
     <div class="post">
+   
         {% if post.published_date %}
             <div class="date">
                 {{ post.published_date }}
+                <!-- models.py의 post클래스의 published_date 속성 -->
             </div>
         {% endif %}
+
         {% if user.is_authenticated %}
+            
             <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-edit"></span></a>
-            <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-trash"></span></a>
+                <!-- url을 직접 안 쓰고 urls.py의 이름"post_edit" 사용
+                 : url(r'^post/(?P<pk>\d+)/edit/$', views.post_edit, name='post_edit'==> 요놈을 사용),밑에 remove도 동일함-->
+            <a  class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-trash"></span></a>
 
             </a>
         {% endif %}
+        
         <h1>{{ post.title }}</h1>
+        <!-- models.py의 post클래스의 title 속성 -->
         <p>{{ post.text|linebreaksbr }}</p>
+        <!-- |로 나누면 왼쪽내용|오른쪽필터 로 필터링해서 나타내라는 것 : 여기서는 줄바꿈에 사용함 -->
+   
     </div>
-
-  <h4><a href="{% url 'post_list' %}">홈으로</a></h4>
-
 {% endblock %}
