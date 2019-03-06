@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post
+from .models import Post, Search
 
 class PostForm(forms.ModelForm):
 
@@ -7,8 +7,15 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['title', 'text']
 
-#다시 보니까 "model = Post"이부분을 보면 PostFrom은 modle의 Post클래스를 만드는 클래스가 됨 즉, 메타클래스 그래서 class Meta가 된듯
 
+class NamuForm(forms.ModelForm):
+
+    class Meta:
+        model = Search
+        fields = ['search']
+
+#다시 보니까 "model = Post"이부분을 보면 PostFrom은 modle의 Post클래스를 만드는 클래스가 됨 즉, 메타클래스 그래서 class Meta가 된듯
+#ModelForm을 쓰면 무지껀 class Meta: 로 써야됨. 커스텀 폼은 바로 name = 뭐뭐뭐 이렇게 가능
 
 '''
 model = Post => import해온 models.py에 있는 Post모델을 사용하겠다

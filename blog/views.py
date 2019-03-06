@@ -1,10 +1,13 @@
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 from .models import Post
-from .forms import PostForm
+from .forms import PostForm, NamuForm
 from django.shortcuts import redirect
 import csv
 from django.http import HttpResponse
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
 
 #views에 있는 함수는 다음의 둘중 하나를 한다. 요청된 페이지를 담고 있는 HttpResponse객체를 반환하거나, Http404같은 예외를 발생시키거나
 #그래서 return render(request, '특정html파일', optional=context)이라고 반환하는것, 즉 특정html모양으로 그려라(render)
@@ -18,7 +21,6 @@ def post_list(request):
                                                            #models에서 만든 Post 클래스를 불러오고 해당 클래스가 만든 모든 객체중에 필터를 걸고 정렬
                                                            #위의 qs(쿼리셋)는 이거를 쪼갠거  Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     return render(request, 'blog/post_list.html', {'post_list' : qs,})
-
 
 #여기서 request를 넣고, html주소를 넣고 마지막으로 post_list는 앞에서 정의한 qs다 라고 딕셔너리를 만들었음
 #이 딕셔너리 혹은 context를 활용해서 blog/post_list.html에서 for루프로 render(화면에 띄워줄)하려는 목적으로!!! 이제 좀 감이 잡힘
@@ -88,9 +90,10 @@ def post_new(request):
 #다시 그 post 오브젝트 자체를 저장함. 오브젝트를 저장하는 것과 데이터를 db에 저장하는 것의 차이?? 왜 두번함????
 
 def post_edit(request, pk):
-    post = get_object_or_404(Post, pk=pk)                               #이른바 다이내믹 url이라서 get_object_or_404
+    post = get_object_or_404(Post, pk=pk)         #수정하는 기능이니까 처음부터 특정글의 정보인 pk가 필요/이른바 다이내믹 url이라서 get_object_or_404
     if request.method == "POST":
-        my_form = PostForm(request.POST)          #, request.FILES, instance=post)
+        my_form = PostForm(request.POST, instance=post)          
+# instance=post를 넣으면 기존 instace를 업데이트하고, 저걸 안 쓰면 새로 instance를 하나 만든다 그래서 post_new에는 없다
         if my_form.is_valid():
             post = my_form.save(commit=False)
             post.author = request.user
@@ -119,6 +122,36 @@ def export_posts_csv(request):
     for post in posts:
         writer.writerow(post)
     return response
+
+#NamuForm은 클래스임, 그러면 search는 인스턴스임
+ 
+def namu_search_view(request):
+    search = NamuForm(request.GET)                             
+    if search.is_valid():
+            url = 'https://www.namu.wiki/w/' + str(search.cleaned_data.get('search'))
+            res = requests.get(url)
+            soup = BeautifulSoup(res.content, 'html.parser')
+            wikiLinkInt = soup.select('.wiki-link-internal')
+            myNamuLink = []
+            for link in wikiLinkInt:
+                thTitle = link.get('title')
+                #thRef_ko = 'http://namu.wiki/w' + thTitle
+                thRef = 'http://namu.wiki' + link.get('href') #이렇게 하면 주소가 특수문자로 나오는데 위와 같이 하면 한글로 표기됨
+                myNamuLink.append((thTitle,thRef))
+    return render(request, 'blog/namu_search.html', { 'search' : myNamuLink })  #여기서 search는 건들지마라
+
+    #이게 namu_search_result를 만들어서 글로 보내야됨
+    #따라서 redirect함수를 써서 namu_search_result.html로 보내면서 view를 알규먼트로 줘야됨
+
+'''
+    if request.method == "POST":
+        my_form = NamuForm(request.POST)
+        print(my_form.cleaned_data)
+        search = my_form.save(commit=False)
+        return redirect('post_detail', pk=post.pk)    
+    return render(request, 'blog/post_edit.html', {'form': my_form})
+#{'앞의 form은 html에 있는 값':뒤에 my_form은 변수 } 다이내믹하게 보여주려고
+'''
 
 '''
 cfe에서는 view에 있는 함수들을 아래와 같이 통일함. 깔끔해짐
