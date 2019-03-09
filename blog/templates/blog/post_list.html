@@ -4,12 +4,12 @@
 <h3><a href="{% url 'export_posts_csv' %}">글목록 다운로드</a></h3>
 <h2>접속자 {{ request.user }}</h2>
 <h2>로그인 여부 : {{ request.user.is_authenticated }}</h2>
-
+<h2><a href="{% url "namu_search_view" %}">나무서치</h2>
+    <div>
     {% for post in post_list %}
         <div class="post">
             <div class="date">
-                <p>published: {{ post.published_date }}</p>
-                
+                <p>published: {{ post.published_date }}</p>                
             <!-- models.py의 post클래스의 published_date 속성 -->
                     </div>
                     <h1>
@@ -22,4 +22,5 @@
                     <h4><p>written: {{ post.author }} </p></h4>
         </div>
     {% endfor %}
+    </div>
 {% endblock %}

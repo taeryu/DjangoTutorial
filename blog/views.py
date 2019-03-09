@@ -124,9 +124,9 @@ def export_posts_csv(request):
     return response
 
 #NamuForm은 클래스임, 그러면 search는 인스턴스임
- 
+
 def namu_search_view(request):
-    search = NamuForm(request.GET)                             
+    search = NamuForm(request.GET)
     if search.is_valid():
             url = 'https://www.namu.wiki/w/' + str(search.cleaned_data.get('search'))
             res = requests.get(url)
@@ -138,9 +138,11 @@ def namu_search_view(request):
                 #thRef_ko = 'http://namu.wiki/w' + thTitle
                 thRef = 'http://namu.wiki' + link.get('href') #이렇게 하면 주소가 특수문자로 나오는데 위와 같이 하면 한글로 표기됨
                 myNamuLink.append((thTitle,thRef))
-            print(myNamuLink)
-    return render(request = request, template_name= 'blog/namu_search.html', context= { 'search' : myNamuLink })  #여기서 search는 건들지마라
+            search = myNamuLink
+    return render(request = request, template_name= 'blog/namu_search.html', context= { 'search' : search })  #여기서 search는 건들지마라
 
+#이제 되냐....???
+#search = myNamuLink라고 해야됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 '''
     if request.method == "POST":
