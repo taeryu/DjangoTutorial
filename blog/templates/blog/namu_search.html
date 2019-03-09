@@ -4,7 +4,7 @@
     <h1>나무서치</h1>
     <form method="GET" class="post-form">
           {% for item in search %}
-          {{ item|safe|linebreaks }}
+          {{ item|safe|escape|linebreaks }}
           {% endfor %}
     <button type="submit" class="save btn btn-primary">검색</button>
 {% endblock %}
