@@ -15,12 +15,12 @@ import pandas as pd
 #꿀팁 : 헷갈리니까 함수명 자체를 _view라고 붙여라
 
 def post_list(request):
-    qs = Post.objects.all()                                #1)qs(쿼리셋) = Post.objecs.all()이라고 ORM 명령어를 이용해서 DB에서 가져온 Post 클래스로 만든 데이터를 리스트 형태로 qs라는 변수에 저장함
-    qs = qs.filter(published_date__lte=timezone.now())     #2)앞에서 가져온 리스트에 필터를 걸어서 현재 시각 이전에 작성된 것만 리스트를 추림
-    qs = qs.order_by('-published_date')                    #3)마지막으로 정렬방식을 개시일을 기준으로 최신순으로 오름차순 정렬한 것을 qs라는 변수에 넣어줌
+    querry_set = Post.objects.all()                                         #1)qs(쿼리셋) = Post.objecs.all()이라고 ORM 명령어를 이용해서 DB에서 가져온 Post 클래스로 만든 데이터를 리스트 형태로 qs라는 변수에 저장함
+    querry_set = querry_set.filter(published_date__lte=timezone.now())     #2)앞에서 가져온 리스트에 필터를 걸어서 현재 시각 이전에 작성된 것만 리스트를 추림
+    querry_set = querry_set.order_by('-published_date')                    #3)마지막으로 정렬방식을 개시일을 기준으로 최신순으로 오름차순 정렬한 것을 qs라는 변수에 넣어줌
                                                            #models에서 만든 Post 클래스를 불러오고 해당 클래스가 만든 모든 객체중에 필터를 걸고 정렬
                                                            #위의 qs(쿼리셋)는 이거를 쪼갠거  Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-    return render(request, 'blog/post_list.html', {'post_list' : qs,})
+    return render(request = request, template_name = 'blog/post_list.html', context = {'post_list' : querry_set,})
 
 #여기서 request를 넣고, html주소를 넣고 마지막으로 post_list는 앞에서 정의한 qs다 라고 딕셔너리를 만들었음
 #이 딕셔너리 혹은 context를 활용해서 blog/post_list.html에서 for루프로 render(화면에 띄워줄)하려는 목적으로!!! 이제 좀 감이 잡힘
@@ -34,7 +34,7 @@ def post_detail(request, pk):
         post = Post.objects.get(pk=pk)    #ORM으로 pk를 get했음.,,,,
     except Post.DoesNotExist:
         raise Http404                 # 위의 내용을 단축해서 쓰면 post = get_object_or_404(Post, pk=pk) ==> 다이내믹 url
-    return render(request, 'blog/post_detail.html', {'post' : post,})
+    return render(request = request, template_name= 'blog/post_detail.html',context= {'post' : post,})
 
 #여기서 id로 바꾸고 템플릿에서도 id로 바꿔서 돌려봐도 동일하게 작동함
 #위에서 post 변수에 Post.objects.get(pk=pk)라고 정의 했으므로 
@@ -63,7 +63,7 @@ def post_new(request):
             return redirect('post_detail', pk=post.pk)    #그냥 이렇게 쓰는듯 왜 두번 저장하는지 아무도 안 가르쳐줌 그냥 외워
     else:                                                #form은 장고의 화면에 보이는 form이고 이거를 다시 post로 받아서 저장하는건가?
         my_form = PostForm()                             #request의 method가 POST가 아니면 my_form에 빈PostForm을 넣어라, 즉 비워라
-    return render(request, 'blog/post_edit.html', {'form': my_form})
+    return render(request = request, template_name= 'blog/post_edit.html', context = {'form': my_form})
 #{'앞의 form은 html에 있는 값':뒤에 my_form은 변수 } 다이내믹하게 보여주려고
 
 #왜 저장을 두번하고 commit=false냐면
@@ -102,7 +102,7 @@ def post_edit(request, pk):
             return redirect('post_detail', pk=post.pk)
     else:
         my_form = PostForm(instance=post)
-    return render(request, 'blog/post_edit.html', {'form' : my_form,}) #다이내믹!!!
+    return render(request = request, template_name= 'blog/post_edit.html', context={'form' : my_form,}) #다이내믹!!!
 
 def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)  #다이내믹 url
@@ -133,15 +133,14 @@ def namu_search_view(request):
             soup = BeautifulSoup(res.content, 'html.parser')
             wikiLinkInt = soup.select('.wiki-link-internal')
             myNamuLink = []
-            for link in wikiLinkInt:
+            for link in wikiLinkInt: 
                 thTitle = link.get('title')
                 #thRef_ko = 'http://namu.wiki/w' + thTitle
                 thRef = 'http://namu.wiki' + link.get('href') #이렇게 하면 주소가 특수문자로 나오는데 위와 같이 하면 한글로 표기됨
                 myNamuLink.append((thTitle,thRef))
-    return render(request, 'blog/namu_search.html', { 'search' : myNamuLink })  #여기서 search는 건들지마라
+            print(myNamuLink)
+    return render(request = request, template_name= 'blog/namu_search.html', context= { 'search' : myNamuLink })  #여기서 search는 건들지마라
 
-    #이게 namu_search_result를 만들어서 글로 보내야됨
-    #따라서 redirect함수를 써서 namu_search_result.html로 보내면서 view를 알규먼트로 줘야됨
 
 '''
     if request.method == "POST":

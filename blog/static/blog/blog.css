@@ -2,7 +2,7 @@
 
 /*page-header 클래스에 적용, 배경색깔은 오렌지;상단여백 값은 0;패딩은 네방향의 안쪽 여백 */
 .page-header {
-    background-color: orange;
+    background-color: #5bc0de;
     margin-top: 0;
     padding: 20px 20px 20px 40px;
 }
