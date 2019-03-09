@@ -135,12 +135,12 @@ def namu_search_view(request):
             myNamuLink = []
             for link in wikiLinkInt: 
                 thTitle = link.get('title')
-                #thRef_ko = 'http://namu.wiki/w' + thTitle
                 thRef = 'http://namu.wiki' + link.get('href') #이렇게 하면 주소가 특수문자로 나오는데 위와 같이 하면 한글로 표기됨
-                myNamuLink.append((thTitle,thRef))
+                hyperlink = '<a href="' + thRef + '" target="_blank">' + thTitle + '</a>'
+                myNamuLink.append( hyperlink )
             search = myNamuLink
     return render(request = request, template_name= 'blog/namu_search.html', context= { 'search' : search })  #여기서 search는 건들지마라
-
+ 
 #이제 되냐....???
 #search = myNamuLink라고 해야됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

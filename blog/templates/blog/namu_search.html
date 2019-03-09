@@ -3,9 +3,8 @@
 {% block content %}
     <h1>나무서치</h1>
     <form method="GET" class="post-form">
-        {{ search }}   <!-- 여기 있는 search는 view가 아니라 form에 있는 search임-->
+          {% for item in search %}
+          {{ item|safe|linebreaks }}
+          {% endfor %}
     <button type="submit" class="save btn btn-primary">검색</button>
-    {% for i in myNamuLink %}
-    {{ i }}
-    {% endfor %}
 {% endblock %}
