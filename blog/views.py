@@ -6,8 +6,8 @@ from django.shortcuts import redirect
 import csv
 from django.http import HttpResponse
 #import requests
-from bs4 import BeautifulSoup
-import pandas as pd
+#from bs4 import BeautifulSoup
+#import pandas as pd
 
 #views에 있는 함수는 다음의 둘중 하나를 한다. 요청된 페이지를 담고 있는 HttpResponse객체를 반환하거나, Http404같은 예외를 발생시키거나
 #그래서 return render(request, '특정html파일', optional=context)이라고 반환하는것, 즉 특정html모양으로 그려라(render)
@@ -125,20 +125,22 @@ def export_posts_csv(request):
 
 #NamuForm은 클래스임, 그러면 search는 인스턴스임
 
+'''
 def namu_search_view(request):
     search = NamuForm(request.GET)
     if search.is_valid():
             url = 'https://www.namu.wiki/w/' + str(search.cleaned_data.get('search'))
-            #res = requests.get(url)
-            #soup = BeautifulSoup(res.content, 'html.parser')
-            #wikiLinkInt = soup.select('.wiki-link-internal')
-            #search = []
-            #for link in wikiLinkInt: 
-            #    thTitle = link.get('title')
-            #    thRef = 'http://namu.wiki' + link.get('href') #주소가 특수문자로 나오는데 한글로 하면 오류남
-            #    hyperlink = '<a href="' + thRef + '" target="_blank">' + thTitle + '</a>'
-            #    search.append( hyperlink )
+            res = requests.get(url)
+            soup = BeautifulSoup(res.content, 'html.parser')
+            wikiLinkInt = soup.select('.wiki-link-internal')
+            search = []
+            for link in wikiLinkInt: 
+                thTitle = link.get('title')
+                thRef = 'http://namu.wiki' + link.get('href') #주소가 특수문자로 나오는데 한글로 하면 오류남
+                hyperlink = '<a href="' + thRef + '" target="_blank">' + thTitle + '</a>'
+                search.append( hyperlink )
     return render(request = request, template_name= 'blog/namu_search.html', context= { 'search' : search })  #여기서 search는 건들지마라
+'''
 
 #requests모듈로 스크래핑을 하면서 parameter를 넣어서 GET메소드로 보내보고 
 #params = {'param1': 'value1', 'param2': 'value'} res = requests.get(URL, params=params)
