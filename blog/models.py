@@ -31,6 +31,9 @@ class Search(models.Model):
 
     search = models.CharField(max_length=30)
 
+#Search모델을 만들긴 했지만 http의 request method가 GET이므로 Search.objects.all()로 검색해도 안나옴
+#모델을 만든건 Form을 생성하기 위함이었으나 실제로 DB에 저장은 안됨. I got exactly what I want!!
+
 #클래스는 빵틀같은거 - 상속이 가능하고, 인스턴스를 만들어낸다. Post클래스는 장고의 Model클래스를 상속받아서,
 #Post인스턴스를 만드는데 author, title, text, created_date, published_date 등의 속성을 미리 정한 인스턴스를 만들어낸다.
 #publish는 클래스 내의 함수이므로 메써드이다. 메써드의 인수는 self이고, self.속성/함수로 적는다. 자기 스스로가 인수이므로

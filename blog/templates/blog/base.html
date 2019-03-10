@@ -11,7 +11,7 @@
 
         <a href="{% url 'post_list' %}">
         <!-- 홈으로 돌아가는 기능 <a href="post_list.html">이라고 하면 왜 안됨? -->
-        <img src="https://w.namu.la/s/966c3229e07161986db0c94945435b5ddcbb1c6e2a43a8ec8cc52ee79e16f560749626d1e9db340fd2db0c36121165401c46b5b2750062800ab1f26c2a75031992594e1a461661e3b000fb6dbb0602a560294b1f928fe2fa0759652b06f7bf8e" width="210px">
+
         </a>
         
         <title> PySon 블로그</title>
@@ -27,7 +27,6 @@
         
     </head>
     <body>
-    {% include "blog/nav.html" %}
             <div class="page-header">
             {% if user.is_authenticated %}
                 <a href="{% url 'post_new' %}" class="top-menu">

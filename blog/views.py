@@ -5,7 +5,7 @@ from .forms import PostForm, NamuForm
 from django.shortcuts import redirect
 import csv
 from django.http import HttpResponse
-import requests
+#import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
@@ -129,18 +129,23 @@ def namu_search_view(request):
     search = NamuForm(request.GET)
     if search.is_valid():
             url = 'https://www.namu.wiki/w/' + str(search.cleaned_data.get('search'))
-            res = requests.get(url)
-            soup = BeautifulSoup(res.content, 'html.parser')
-            wikiLinkInt = soup.select('.wiki-link-internal')
-            myNamuLink = []
-            for link in wikiLinkInt: 
-                thTitle = link.get('title')
-                thRef = 'http://namu.wiki' + link.get('href') #이렇게 하면 주소가 특수문자로 나오는데 위와 같이 하면 한글로 표기됨
-                hyperlink = '<a href="' + thRef + '" target="_blank">' + thTitle + '</a>'
-                myNamuLink.append( hyperlink )
-            search = myNamuLink
+            #res = requests.get(url)
+            #soup = BeautifulSoup(res.content, 'html.parser')
+            #wikiLinkInt = soup.select('.wiki-link-internal')
+            #search = []
+            #for link in wikiLinkInt: 
+            #    thTitle = link.get('title')
+            #    thRef = 'http://namu.wiki' + link.get('href') #주소가 특수문자로 나오는데 한글로 하면 오류남
+            #    hyperlink = '<a href="' + thRef + '" target="_blank">' + thTitle + '</a>'
+            #    search.append( hyperlink )
     return render(request = request, template_name= 'blog/namu_search.html', context= { 'search' : search })  #여기서 search는 건들지마라
- 
+
+#requests모듈로 스크래핑을 하면서 parameter를 넣어서 GET메소드로 보내보고 
+#params = {'param1': 'value1', 'param2': 'value'} res = requests.get(URL, params=params)
+#res.url명령어를 넣어보면 https://www.tistory.com/?param1=value1&param2=value 검색어를 url주소에 넣어서 같이 보내는것
+#https://dgkim5360.tistory.com/entry/python-requests 이 사이트에서 설명해줌
+
+
 #이제 되냐....???
 #search = myNamuLink라고 해야됨!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

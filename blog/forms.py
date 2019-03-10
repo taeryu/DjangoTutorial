@@ -14,6 +14,8 @@ class NamuForm(forms.ModelForm):
         model = Search
         fields = ['search']
 
+
+
 #다시 보니까 "model = Post"이부분을 보면 PostFrom은 modle의 Post클래스를 만드는 클래스가 됨 즉, 메타클래스 그래서 class Meta가 된듯
 #ModelForm을 쓰면 무지껀 class Meta: 로 써야됨. 커스텀 폼은 바로 name = 뭐뭐뭐 이렇게 가능
 
