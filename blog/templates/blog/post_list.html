@@ -1,9 +1,9 @@
 {% extends "blog/base.html" %}
 
 {% block content %}
-<h3><a href="{% url 'export_posts_csv' %}">글목록 다운로드</a></h3>
+<h3><a href="{% url 'post_import' %}">엑셀 대량 업로드                         </a></h3>
+<h3><a href="{% url 'export_posts_excel' %}">글목록 다운로드</a></h3>
 <h2>접속자 {{ request.user }}</h2>
-<h2>로그인 여부 : {{ request.user.is_authenticated }}</h2>
 <h2><a href="{% url "namu_search_view" %}">나무서치</h2>
     <div>
     {% for post in post_list %}

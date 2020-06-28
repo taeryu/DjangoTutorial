@@ -2,9 +2,9 @@
 
 {% block content %}
     <h1>새글</h1>
-    <form method="POST" class="post-form">
+    <form method="POST" class="post-form"> <!--form태그에서 method는 POST를-->
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ my_form.as_p }}
         <!-- as_p는 애즈 패러그래프 as_ul, as_li같이 쓰는거 -->
         <button type="submit" class="save btn btn-primary">저장</button>
 {% endblock %}

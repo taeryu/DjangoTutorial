@@ -1,14 +1,13 @@
-{% load staticfiles %}
+{% load static %}
 
-<!-- base.html파일은 직접 사용하는게 아니라 모든 페이지에 공통으로 상속하려고 만드는 일종의 클래스 화면 -
-실제 page에서 extends "blog/base.html" 로 상속해서 사용한다->
+<!DOCTYPE html>
+<html lang="ko">
 
-<html>
+
     <head>
         <!--  헤드에는 사용자에게 보여지지 않는 온갖것들 :검색결과에 보여지기를 바라는 키워드, 설명이나 CSS스타일, utf-8등의 캐릭터 세팅 등을 담는다 -->
         <meta charset="utf-8" />
         <!-- 이거를 꼭 달아야 나중에 문제가 안된다. 캐릭터 세팅은 다른 타입은 신경 안써도 된다 -->
-
         <a href="{% url 'post_list' %}">
         <!-- 홈으로 돌아가는 기능 <a href="post_list.html">이라고 하면 왜 안됨? -->
 
@@ -17,14 +16,16 @@
         <title> PySon 블로그</title>
         <!-- 마우스커서를 올리면 나타나는 title 즐겨찾기를 할때도 이 제목으로 표시됨-->
         
-        <!-- <link rel="shortcut icon" href="~~~이렇게 해서 파비콘을 쓸수도 있음 -->
-        <!-- <link rel="스타일시트" href="CSS파일명"을 헤드에 써서 스타일시트사용-->
+       <!--부트스트랩 공식 예제 https://getbootstrap.com/docs/4.0/getting-started/introduction/#starter-template-->
+
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">     
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext">
-        <link rel="stylesheet" href="{% static "blog/blog.css" %}"" />       
-        
-        
+
+        <link rel="stylesheet" href="{% static "blog/blog.css" %}"" />
+
+
+
     </head>
     <body>
             <div class="page-header">

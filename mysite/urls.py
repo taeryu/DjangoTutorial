@@ -18,7 +18,8 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'', include('blog.urls')),
+    url(r'', include('blog.urls')),           # mysite라는 프로젝트에서 blog라는 앱의 url패턴을 사용하겠다
 ]

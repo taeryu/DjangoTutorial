@@ -3,15 +3,16 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     url(r'^$', views.post_list, name='post_list'),                        
     url(r'^post/(?P<pk>\d+)/$', views.post_detail, name='post_detail'),
     url(r'^post/new/$', views.post_new, name='post_new'),
     url(r'^post/(?P<pk>\d+)/edit/$', views.post_edit, name='post_edit'),
     url(r'^post/(?P<pk>\d+)/remove/$', views.post_remove, name='post_remove'),
-    url(r'^export/csv/$', views.export_posts_csv, name='export_posts_csv'),
+    url(r'^export/excel/$', views.export_posts_excel, name='export_posts_excel'),
+    url(r'^import/$', views.post_import, name='post_import'),
     url(r'^namu_search/$', views.namu_search_view, name='namu_search_view'),
-    
 ]
 
 #post/(?P<pk>\d+) 여기 있는 pk가 글번호니까 이게 바로 다이내믹 유아렐이고 이거를 위해서 get_object_or_404가 필요하다. 그래서 

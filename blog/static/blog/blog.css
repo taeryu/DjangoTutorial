@@ -7,9 +7,6 @@
     padding: 20px 20px 20px 40px;
 }
 
-
-
-
 /*page-header 클래스의 자손 중 h1, h1의 a 즉 링크, a 즉 링크 중 방문한 경우 및 활성화 상태인 경우 (pseudo의사선택)  */
 .page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
     color: #ffffff;
